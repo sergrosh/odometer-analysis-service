@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="true">
+
+    <property name="LOG_PATTERN" value="%date %level [%thread] %logger{40} %msg %X%n"/>
+    <property name="LOG_IDENT" value="odometer-analysis-service"/>
+    <property name="LOG_BASEPATH" value="/var/log/applications/odometer-analysis-service"/>
+
+
+    <logger level="INFO" name="eu.carfax"/>
+
+    <!-- if spring profile is UNDEFINED use dev config -->
+    <if condition='"${spring.profiles.active}".equals("spring.profiles.active_IS_UNDEFINED")'>
+        <then>
+            <include resource="logback-dev.xml"/>
+        </then>
+        <else>
+            <!-- Adding additional profile specific config... -->
+            <include resource="logback-${spring.profiles.active}.xml"/>
+        </else>
+    </if>
+</configuration>

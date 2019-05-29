@@ -1,0 +1,86 @@
+#APP INFO
+info:
+  app:
+    description: MicroService for odometer analysis
+    name: odometer-analysis-service
+
+#TOMCAT settings
+server.port: 8801
+
+#SECURITY CustomerDBO settings
+username-database:
+  users:
+    api:
+      username: api
+      password: '{noop}qxsys'
+    monitor:
+      username: mon
+      password: '{noop}qysys'
+
+# Prometheus
+management:
+  endpoint:
+    metrics:
+      enabled: true
+    prometheus:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: prometheus,metrics,info,health
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+
+
+rest:
+  vehicle-history:
+    read:
+      timeout: 30000
+      connect: 30000
+
+#  Or split into separate yml files for Live, Stage, Dev
+#  ========================PROFILE  for LIVE==============================
+#
+---
+spring:
+  profiles: live
+
+rest:
+  vehicle-history:
+    url: https://s3-eu-west-1.amazonaws.com/coding-challenge.carfax.eu
+    get-by-vin-uri: /{vin}
+
+#  ========================PROFILE  for STAGE==============================
+#
+---
+spring:
+  profiles: stage
+
+rest:
+  vehicle-history:
+    url: https://s3-eu-west-1.amazonaws.com/coding-challenge.carfax.eu
+    get-by-vin-uri: /{vin}
+
+#  ========================PROFILE  for DEV==============================
+#
+---
+spring:
+  profiles: dev
+
+rest:
+  vehicle-history:
+    url: https://s3-eu-west-1.amazonaws.com/coding-challenge.carfax.eu
+    get-by-vin-uri: /{vin}
+
+#  ========================PROFILE  for TEST==============================
+#
+---
+spring:
+  profiles: test
+
+rest:
+  vehicle-history:
+    url: https://s3-eu-west-1.amazonaws.com/coding-challenge.carfax.eu
+    get-by-vin-uri: /{vin}
