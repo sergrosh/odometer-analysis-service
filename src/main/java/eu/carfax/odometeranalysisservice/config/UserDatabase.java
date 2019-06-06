@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.Map;
@@ -13,6 +14,7 @@ import java.util.Map;
  * @since 2019-05-28.
  */
 @Configuration
+@EnableConfigurationProperties(UserDatabase.class)
 @ConfigurationProperties(prefix = "username-database")
 class UserDatabase {
 

@@ -24,8 +24,8 @@ public class VehicleHistoryGatewayConfig {
     private final Integer connectTimeout;
 
     public VehicleHistoryGatewayConfig(
-            @Value("${rest.vehicle-history.read.timeout}") Integer readTimeout,
-            @Value("${rest.vehicle-history.read.connect}") Integer connectTimeout) {
+            @Value("${rest.vehicle-history.read.timeout}") final Integer readTimeout,
+            @Value("${rest.vehicle-history.read.connect}") final Integer connectTimeout) {
         this.readTimeout = readTimeout;
         this.connectTimeout = connectTimeout;
     }

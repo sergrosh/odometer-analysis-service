@@ -29,10 +29,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
-@WithMockUser(username = "api", roles = "API")
 @ActiveProfiles(profiles = "test")
 public class OdometerAnalysisControllerIntegrationTest extends AbstractTestProvider {
-    private static final String ROLLBACK_URI = "/odometer/rollback/";
+    private static final String ROLLBACK_URI = "/api/v1/odometer/rollback/";
     private static final String SUCCESS_VIN = "VSSZZZ6JZ9R056308";
     private static final String FAILURE_VIN = "VSSZZZ6JZ9R0563081";
     private static final String VEHICLE_HISTORY_OUTPUT_JSON = "testData/testVehicleHistoryWithRollback_out.json";
@@ -46,16 +45,24 @@ public class OdometerAnalysisControllerIntegrationTest extends AbstractTestProvi
     }
 
     @Test
+    @WithMockUser(username = "api", roles = "API")
     public void testSuccessResponseFromOdometerAnalysisController() throws Exception {
         mockMvc.perform(get(ROLLBACK_URI + SUCCESS_VIN)).andExpect(status().isOk());
     }
 
     @Test
+    @WithMockUser(username = "api", roles = "API")
     public void testFailureResponseFromOdometerAnalysisController() throws Exception {
         mockMvc.perform(get(ROLLBACK_URI + FAILURE_VIN)).andExpect(status().isBadRequest());
     }
 
     @Test
+    public void testUnauthorizedResponseFromOdometerAnalysisController() throws Exception {
+        mockMvc.perform(get(ROLLBACK_URI + SUCCESS_VIN)).andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    @WithMockUser(username = "api", roles = "API")
     public void testResponseBodyFromOdometerAnalysisController() throws Exception {
         MvcResult result = mockMvc.perform(get(ROLLBACK_URI + SUCCESS_VIN)).andReturn();
         String expectedContent = getContentFromFile(VEHICLE_HISTORY_OUTPUT_JSON);

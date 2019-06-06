@@ -27,23 +27,24 @@ import java.util.List;
 
 @RestController
 @Api(value = "Odometer analysis", tags = "Odometer Rollback", produces = "application/json")
-@RequestMapping("/odometer/")
+@RequestMapping("/api/v1/odometer/")
 public class OdometerAnalysisController {
 
     private final OdometerAnalysisService odometerAnalysisService;
 
     @Autowired
-    public OdometerAnalysisController(OdometerAnalysisService odometerAnalysisService) {
+    public OdometerAnalysisController(final OdometerAnalysisService odometerAnalysisService) {
         this.odometerAnalysisService = odometerAnalysisService;
     }
 
     @ApiOperation(value = "Get vehicle history with analyzed odometer rollback info")
-    @GetMapping("/rollback/{vin}")
+    @GetMapping(value = "/rollback/{vin}", produces = "application/json; charset=UTF-8")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Calculated successfully"),
-            @ApiResponse(code = 400, message = "Bad request")
+            @ApiResponse(code = 400, message = "Bad request"),
+            @ApiResponse(code = 401, message = "You are not authorized to view the resource")
     })
-    public ResponseEntity<VehicleHistoryResponse> getVehicleHistoryWithOdometerRollbackInfo(@ApiParam(required = true) @PathVariable(value = "vin") String vin) {
+    public ResponseEntity<VehicleHistoryResponse> getVehicleHistoryWithOdometerRollbackInfo(@ApiParam(value = "Vehicle identification number", required = true) @PathVariable(value = "vin") String vin) {
         VehicleHistoryResponse vehicleHistoryResponse = new VehicleHistoryResponse();
         List<VehicleHistoryRecord> records = odometerAnalysisService.getAnalyzedVehicleRecordsByVin(vin);
         vehicleHistoryResponse.setRecords(records);

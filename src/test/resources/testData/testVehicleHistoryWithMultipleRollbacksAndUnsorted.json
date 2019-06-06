@@ -1,7 +1,7 @@
 {
   "records": [
     {
-      "vin": "VSSZZZ6JZ9R056308",
+      "vin": "VSSZZZ6JZ9R056309",
       "date": "2017-01-02",
       "data_provider_id": 10,
       "odometer_reading": 10010,
@@ -11,7 +11,16 @@
       ]
     },
     {
-      "vin": "VSSZZZ6JZ9R056308",
+      "vin": "VSSZZZ6JZ9R056309",
+      "date": "2018-02-12",
+      "data_provider_id": 10,
+      "odometer_reading": 11100,
+      "service_details": [
+        "Windshield replaced"
+      ]
+    },
+    {
+      "vin": "VSSZZZ6JZ9R056309",
       "date": "2017-06-20",
       "data_provider_id": 10,
       "odometer_reading": 12100,
@@ -20,33 +29,23 @@
       ]
     },
     {
-      "vin": "VSSZZZ6JZ9R056308",
-      "date": "2018-02-12",
-      "data_provider_id": 10,
-      "odometer_reading": 15100,
-      "service_details": [
-        "Windshield replaced"
-      ]
-    },
-    {
-      "vin": "VSSZZZ6JZ9R056308",
-      "date": "2018-04-01",
-      "data_provider_id": 10,
-      "odometer_reading": 5600,
-      "service_details": [
-        "Air dam replaced",
-        "Oil service"
-      ],
-      "mileage_inconsistency": true
-    },
-    {
-      "vin": "VSSZZZ6JZ9R056308",
+      "vin": "VSSZZZ6JZ9R056309",
       "date": "2018-06-23",
       "data_provider_id": 10,
-      "odometer_reading": 6400,
+      "odometer_reading": 11700,
       "service_details": [
         "Rear axle oil exchanged",
         "Engine oil pump repaired/replaced"
+      ]
+    },
+    {
+      "vin": "VSSZZZ6JZ9R056309",
+      "date": "2018-04-01",
+      "data_provider_id": 10,
+      "odometer_reading": 12600,
+      "service_details": [
+        "Air dam replaced",
+        "Oil service"
       ]
     }
   ]

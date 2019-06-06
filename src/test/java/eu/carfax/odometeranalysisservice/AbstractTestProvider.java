@@ -41,5 +41,4 @@ public class AbstractTestProvider {
     protected String getContentFromFile(String resourceName) throws IOException {
         return IOUtils.toString(Objects.requireNonNull(Thread.currentThread().getContextClassLoader().getResourceAsStream(resourceName)), StandardCharsets.UTF_8.name());
     }
-
 }

@@ -27,12 +27,14 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 public class SwaggerConfig {
     private static final Logger LOG = LoggerFactory.getLogger(SwaggerConfig.class);
 
-
     /**
      * The value has to be supplied as configuration parameter -Dswagger-ui.hostname=<servicename>-<env>
      */
-    @Value("${swagger-ui.hostname:}")
-    private String hostname;
+    private final String hostname;
+
+    public SwaggerConfig(@Value("${swagger-ui.hostname:}") final String hostname) {
+        this.hostname = hostname;
+    }
 
     /**
      * @return the docket
@@ -49,19 +51,18 @@ public class SwaggerConfig {
             LOG.info("Swagger ux will use default hostname for API 'try it' calls.");
         }
         return docket.select()
-                .paths(PathSelectors.ant("/odometer/**"))
+                .paths(PathSelectors.ant("/api/v1/odometer/**"))
                 .build();
     }
 
 
     private ApiInfo apiInfo() {
-        final Contact contact = new Contact("", "", "");
+        final Contact contact = new Contact("Sergii R", "www.carfax.eu", "some.email@email.com");
         return new ApiInfoBuilder()
                 .title("Odometer Analysis Service API")
-                .description("---")
+                .description("Service for calculation odometer rollback appearance")
                 .contact(contact)
                 .version("1.0")
                 .build();
     }
-
 }

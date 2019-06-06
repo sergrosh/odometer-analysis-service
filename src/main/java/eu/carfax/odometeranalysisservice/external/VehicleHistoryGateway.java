@@ -29,8 +29,9 @@ public class VehicleHistoryGateway {
     private final String getByVinUri;
 
     @Autowired
-    public VehicleHistoryGateway(final RestTemplate vehicleHistoryRestTemplate, @Value("${rest.vehicle-history.url}") String vehicleHistoryServiceUrl,
-                                 @Value("${rest.vehicle-history.get-by-vin-uri}") String getByVinUri) {
+    public VehicleHistoryGateway(final RestTemplate vehicleHistoryRestTemplate,
+                                 @Value("${rest.vehicle-history.url}") final String vehicleHistoryServiceUrl,
+                                 @Value("${rest.vehicle-history.get-by-vin-uri}") final String getByVinUri) {
         this.vehicleHistoryRestTemplate = vehicleHistoryRestTemplate;
         this.vehicleHistoryServiceUrl = vehicleHistoryServiceUrl;
         this.getByVinUri = getByVinUri;
@@ -47,8 +48,7 @@ public class VehicleHistoryGateway {
                 .expand(vin)
                 .encode().toUri();
         try {
-            ResponseEntity<VehicleHistoryResponse> response = vehicleHistoryRestTemplate.getForEntity(
-                    requestURI, VehicleHistoryResponse.class);
+            ResponseEntity<VehicleHistoryResponse> response = vehicleHistoryRestTemplate.getForEntity(requestURI, VehicleHistoryResponse.class);
 
             if (response.getStatusCode().is2xxSuccessful()) {
                 VehicleHistoryResponse vehicleHistoryResponse = response.getBody();
@@ -66,7 +66,6 @@ public class VehicleHistoryGateway {
             log.error("Exception while retrieving vehicle history by vin {}, cause: {}", vin, ex.getMessage());
             return Collections.emptyList();
         }
-
     }
 }
 

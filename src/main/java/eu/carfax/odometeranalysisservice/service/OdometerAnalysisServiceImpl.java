@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.stream.Collectors;
 
 /**
@@ -38,15 +39,34 @@ public class OdometerAnalysisServiceImpl implements OdometerAnalysisService {
             List<VehicleHistoryRecord> sortedVehicleHistoryRecords = vehicleHistoryRecords.stream()
                     .sorted(Comparator.comparing(VehicleHistoryRecord::getDate, Comparator.nullsLast(Comparator.naturalOrder())))
                     .collect(Collectors.toList());
-            long odometerPreviousValue = 0L;
-            for (VehicleHistoryRecord vehicleHistoryRecord : sortedVehicleHistoryRecords) {
-                if (vehicleHistoryRecord.getDate() == null) {
+
+            VehicleHistoryRecord previous;
+            VehicleHistoryRecord current;
+            ListIterator<VehicleHistoryRecord> listIterator = sortedVehicleHistoryRecords.listIterator();
+            while (listIterator.hasNext()) {
+                if (listIterator.hasPrevious()) {
+                    previous = listIterator.previous();
+                    listIterator.next();
+                } else {
+                    listIterator.next();
+                    continue;
+                }
+                current = listIterator.next();
+                if (current.getDate() == null) {
                     break;
                 }
-                if (odometerPreviousValue > vehicleHistoryRecord.getOdometerReading()) {
-                    vehicleHistoryRecord.setOdometerRollback(true);
+
+                if (previous.getOdometerReading() > current.getOdometerReading()) {
+                    if (listIterator.hasNext()) {
+                        if (previous.getOdometerReading() >= listIterator.next().getOdometerReading()) {
+                            current.setMileageInconsistency(true);
+                        } else {
+                            current.setOdometerRollback(true);
+                        }
+                    } else {
+                        current.setOdometerRollback(true);
+                    }
                 }
-                odometerPreviousValue = vehicleHistoryRecord.getOdometerReading();
             }
             return sortedVehicleHistoryRecords;
         }
